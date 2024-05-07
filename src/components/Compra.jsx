@@ -2,75 +2,76 @@ import React from "react";
 import { useState, useReducer } from "react";
 
 const types = {
-  aumentar: "aumentar",
-  disminuir: "disminuir",
-  eliminar: "eliminar",
-  añadir: "añadir",
+  increase: "increase",
+  decrease: "decrease",
+  delete: "delete",
+  add: "add",
 };
 
 const initialState = [];
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case types.aumentar:
-      return state.map((producto) =>
-        producto.id === action.payload
-          ? { ...producto, unidades: producto.unidades + 1 }
-          : producto
+    case types.increase:
+      return state.map((product) =>
+        product.id === action.payload
+          ? { ...product, units: product.units + 1 }
+          : product
       );
-    case types.disminuir:
-      return state.map((producto) =>
-        producto.id === action.payload && producto.unidades > 1
-          ? { ...producto, unidades: producto.unidades - 1 }
-          : producto
+    case types.decrease:
+      return state.map((product) =>
+        product.id === action.payload && product.units > 1
+          ? { ...product, units: product.units - 1 }
+          : product
       );
-    case types.eliminar:
-      return state.filter((producto) => producto.id !== action.payload);
-    case types.añadir:
+    case types.delete:
+      return state.filter((product) => product.id !== action.payload);
+    case types.add:
       return [...state, action.payload];
     default:
       return state;
   }
 };
+
 const Compra = () => {
-  const [lista, dispatch] = useReducer(reducer, initialState);
-  const [producto, setProducto] = useState("");
+  const [list, dispatch] = useReducer(reducer, initialState);
+  const [product, setProduct] = useState("");
   const inputName = React.createRef("");
 
   return (
-    <div className="contenedor-principal">
+    <div className="main-container">
       <h1>Lista de la compra</h1>
       <div className="input">
-        <label htmlFor="producto">Producto:</label>
+        <label htmlFor="product">Producto:</label>
         <input
-          id="producto"
+          id="product"
           ref={inputName}
           type="text"
           maxLength={25}
-          value={producto}
-          onChange={(e) => setProducto(e.target.value)}
+          value={product}
+          onChange={(e) => setProduct(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               inputName.current.focus();
-              setProducto("");
-              producto !== ""
+              setProduct("");
+              product !== ""
                 ? dispatch({
-                    type: types.añadir,
-                    payload: { id: Date.now(), nombre: producto, unidades: 1 },
+                    type: types.add,
+                    payload: { id: Date.now(), name: product, units: 1 },
                   })
                 : alert("Introduce un producto");
             }
           }}
         />
         <button
-          className="botonInput"
+          className="input-button"
           onClick={() => {
             inputName.current.focus();
-            setProducto("");
-            producto !== ""
+            setProduct("");
+            product !== ""
               ? dispatch({
-                  type: types.añadir,
-                  payload: { id: Date.now(), nombre: producto, unidades: 1 },
+                  type: types.add,
+                  payload: { id: Date.now(), name: product, units: 1 },
                 })
               : alert("Introduce un producto");
           }}
@@ -78,33 +79,35 @@ const Compra = () => {
           Añadir
         </button>
       </div>
-      {lista.map((producto) => (
-        <div className="lista" key={producto.id}>
-          <span className="nombre">{producto.nombre}</span> {producto.unidades}
-          {producto.unidades < 2 ? " unidad" : " unidades"}
-          <span className="botonesInput">
-          <button
-            className="botonesLista"
-            onClick={() =>
-              dispatch({ type: types.aumentar, payload: producto.id })
-            }
-          >
-            Aumentar
-          </button>
-          <button className="botonesLista"
-            onClick={() =>
-              dispatch({ type: types.disminuir, payload: producto.id })
-            }
-          >
-            Disminuir
-          </button>
-          <button className="botonesLista"
-            onClick={() =>
-              dispatch({ type: types.eliminar, payload: producto.id })
-            }
-          >
-            Eliminar
-          </button>
+      {list.map((product) => (
+        <div className="list" key={product.id}>
+          <span className="name">{product.name}</span> {product.units}
+          {product.units < 2 ? " unit" : " units"}
+          <span className="input-buttons">
+            <button
+              className="list-buttons"
+              onClick={() =>
+                dispatch({ type: types.increase, payload: product.id })
+              }
+            >
+              Aumentar
+            </button>
+            <button
+              className="list-buttons"
+              onClick={() =>
+                dispatch({ type: types.decrease, payload: product.id })
+              }
+            >
+              Disminuir
+            </button>
+            <button
+              className="list-buttons"
+              onClick={() =>
+                dispatch({ type: types.delete, payload: product.id })
+              }
+            >
+              Eliminar
+            </button>
           </span>
         </div>
       ))}
@@ -113,3 +116,4 @@ const Compra = () => {
 };
 
 export default Compra;
+
