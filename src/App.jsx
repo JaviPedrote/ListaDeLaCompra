@@ -1,11 +1,11 @@
-import Compra from './components/Compra'
+import List from './components/List'
 import './App.css'
 
 function App() {
 
   return (
     <div className="App">
-      <Compra />
+      <List />
     </div>
   )
 }
