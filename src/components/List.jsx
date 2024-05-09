@@ -11,26 +11,25 @@ export const TYPE = {
   ADD: Symbol('add'),
 };
 
-const initialState = [];
-
-function increaseProduct (state,payload) {
+const increaseProduct = (state,payload) => {
   return state.map((product) => 
     product.id === payload 
   ? { ...product, units: product.units + 1 } 
   : product)
 }
-function decreaseProduct (state,payload) {
+const decreaseProduct = (state,payload) => {
   return state.map((product) => 
     product.id === payload && product.units > 1
   ? { ...product, units: product.units - 1 } 
   : product)
 }
-function deleteProduct (state,payload) {
+const deleteProduct = (state,payload) => {
   return state.filter((product) => product.id !== payload);
 }
-function addProduct (state,payload) {
+const addProduct = (state,payload) => {
   return [...state, payload];
 }
+
 const reducer = (state, action) => {
   switch (action.type) {
     case TYPE.INCRESE:
@@ -45,6 +44,8 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
+const initialState = [];
 
 const List = () => {
   const [list, dispatch] = useReducer(reducer, initialState);
