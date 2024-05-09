@@ -1,10 +1,11 @@
-import React from "react";
+import { TYPE } from "./List";
 
-const IncreaseButton = ({ productId, dispatch }) => {
+
+const IncreaseButton = ({ productId, dispatch }) => { 
   return (
       <button
         className="list-buttons"
-        onClick={() => dispatch({ type: "increase", payload: productId })}
+        onClick={() => dispatch({ type: TYPE.INCRESE, payload: productId })}
       >
         Aumentar
       </button>
