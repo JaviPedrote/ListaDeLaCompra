@@ -1,11 +1,15 @@
-import { TYPE } from "./List";
+import { useDispatch } from "react-redux";
+import { increaseProduct } from "../redux/listSlice";
 
 
-const IncreaseButton = ({ productId, dispatch }) => { 
+const IncreaseButton = ({ productId }) => {
+
+  const dispatch = useDispatch();
+  
   return (
       <button
         className="list-buttons"
-        onClick={() => dispatch({ type: TYPE.INCRESE, payload: productId })}
+        onClick={() => dispatch(increaseProduct(productId))}
       >
         Aumentar
       </button>

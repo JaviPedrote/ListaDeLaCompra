@@ -1,10 +1,18 @@
-import { TYPE } from "./List";
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../redux/listSlice'// Asegúrate de importar desde la ubicación correcta
 
-const DeleteButton = ({ productId, dispatch }) => {
+const DeleteButton = ({ productId }) => {
+
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteProduct(productId));
+  }
+
   return (
       <button
         className="list-buttons"
-        onClick={() => dispatch({ type: TYPE.DELETE , payload: productId })}
+        onClick={handleDelete}
       >
         Eliminar
         </button>

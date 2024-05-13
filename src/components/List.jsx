@@ -1,55 +1,15 @@
-import { useState, useReducer, useEffect, useRef } from "react";
-import IncreaseButton from "./IncreaseButton";
-import DecreaseButton from "./DecreaseButton";
-import DeleteButton from "./DeleteButton";
-
-
-export const TYPE = { 
-  INCRESE: Symbol('increase'),
-  DECRESE: Symbol('decrease'),
-  DELETE: Symbol('delete'),
-  ADD: Symbol('add'),
-};
-
-const increaseProduct = (state,payload) => {
-  return state.map((product) => 
-    product.id === payload 
-  ? { ...product, units: product.units + 1 } 
-  : product)
-}
-const decreaseProduct = (state,payload) => {
-  return state.map((product) => 
-    product.id === payload && product.units > 1
-  ? { ...product, units: product.units - 1 } 
-  : product)
-}
-const deleteProduct = (state,payload) => {
-  return state.filter((product) => product.id !== payload);
-}
-const addProduct = (state,payload) => {
-  return [...state, payload];
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case TYPE.INCRESE:
-      return increaseProduct(state, action.payload);
-    case TYPE.DECRESE:
-      return decreaseProduct(state, action.payload);
-    case TYPE.DELETE:
-      return deleteProduct(state, action.payload);
-    case TYPE.ADD:
-      return addProduct(state, action.payload);
-    default:
-      return state;
-  }
-};
-
-const initialState = [];
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../redux/listSlice';
+import AddButton from './AddButton';
+import DeleteButton from './DeleteButton';
+import IncreaseButton from './IncreaseButton';
+import DecreaseButton from './DecreaseButton';
 
 const List = () => {
-  const [list, dispatch] = useReducer(reducer, initialState);
-  const [product, setProduct] = useState(" ");
+  const dispatch = useDispatch();
+  const list = useSelector(state => state.list);
+  const [product, setProduct] = useState("");
   const inputName = useRef();
 
   useEffect(() => {
@@ -60,12 +20,10 @@ const List = () => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter") {
         const productValue = event.target.value;
-        event.target.value = ("");
+        event.target.value = "";
+        setProduct("");
         productValue !== ""
-          ? dispatch({
-              type: TYPE.ADD,
-              payload: { id: Date.now(), name: productValue, units: 1 },
-            })
+          ? dispatch(addProduct({ id: Date.now(), name: productValue, units: 1 }))
           : alert("Introduce un producto");
       }
     };
@@ -88,22 +46,7 @@ const List = () => {
           <div className="input">
             <label htmlFor="product">Producto:</label>
             <input id="product" ref={inputName} type="text" maxLength={20} defaultValue={product} />
-            <button
-              className="input-button"
-              onClick={() => {
-                inputName.current.focus();
-                setProduct("");
-                inputName.current.value= ""; 
-                product !== ""
-                  ? dispatch({
-                      type: TYPE.ADD,
-                      payload: { id: Date.now(), name: product, units: 1 }, //
-                    })
-                  : alert("Introduce un producto");
-              }}
-            >
-              Añadir
-            </button>
+            <AddButton product={product} setProduct={setProduct} inputName={inputName} />
           </div>
           {list.map((product) => (
             <div className="list" key={product.id}>
@@ -112,9 +55,9 @@ const List = () => {
                 {product.units}
                 {product.units < 2 ? " unidad" : " unidades"}
               </span>
-              <IncreaseButton productId={product.id} dispatch={dispatch} />
-              <DecreaseButton productId={product.id} dispatch={dispatch} />
-              <DeleteButton productId={product.id} dispatch={dispatch} />
+              <DeleteButton productId={product.id} /> 
+              <IncreaseButton productId={product.id} />
+              <DecreaseButton productId={product.id} />          
             </div>
           ))}
         </div>
@@ -124,4 +67,3 @@ const List = () => {
 };
 
 export default List;
-
