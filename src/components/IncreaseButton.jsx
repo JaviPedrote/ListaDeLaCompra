@@ -11,7 +11,7 @@ const IncreaseButton = ({ productId }) => {
       className="list-buttons"
       onClick={() => dispatch(increaseProduct(productId))}
     >
-      {t("Increase")}
+      {t("list.increase")}
     </button>
   );
 };

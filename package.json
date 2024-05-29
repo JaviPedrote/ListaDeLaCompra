@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.4",
+    "dayjs": "^1.11.11",
+    "fuse.js": "^7.0.0",
     "i18next": "^23.11.4",
     "i18next-http-backend": "^2.5.1",
     "next-i18next": "^15.3.0",

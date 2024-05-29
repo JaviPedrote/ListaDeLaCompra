@@ -10,7 +10,7 @@ const DecreaseButton = ({ productId }) => {
       className="list-buttons"
       onClick={() => dispatch(decreaseProduct(productId))}
     >
-      {t("Decrease")}
+      {t("list.decrease")}
     </button>
   );
 };

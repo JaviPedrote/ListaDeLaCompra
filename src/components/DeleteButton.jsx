@@ -12,7 +12,7 @@ const DeleteButton = ({ productId }) => {
 
   return (
     <button className="list-buttons" onClick={handleDelete}>
-      {t("Delete")}
+      {t("list.delete")}
     </button>
   );
 };

@@ -96,7 +96,7 @@ input:focus {
 }
 
 .check {
-  margin-right: 9vw;
+  margin-right: 1vw;
   border-radius: 50%;
   width: 2vw;
 }
@@ -112,7 +112,7 @@ input:focus {
   color: #ffffff;
   font-size: 1.4vw;
   margin-left: 1vw;
-  margin-right: 5vw;
+  margin-right: 2vw;
 }
 
 .list-buttons {
@@ -133,7 +133,24 @@ input:focus {
 .list-buttons:focus {
   outline: none;
 }
-
+.search-toolbar {
+  display: flex;
+  width: 25vw;
+  justify-content: center;
+  align-items: center;
+}
+.filtered-list {
+  font-size: 1.7vw;
+  display: flex;
+  align-items: center;
+}
+.date{
+  font-size: 1.25vw;
+  margin-left:0.5vw;
+  margin-right: 1vw;
+  width: 8vw;
+  color: #ede5fe;
+}
 select {
   font-size: 1.5vw;
   background-color: white;
@@ -184,6 +201,6 @@ select {
   }
 
   .units {
-    margin-right: 15vw;
+    margin-right: 5vw;
   }
 }

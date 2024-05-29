@@ -20,6 +20,7 @@ const listSlice = createSlice({
         id: action.payload.id,
         name: action.payload.name,
         units: action.payload.units,
+        timestamp: action.payload.timestamp,
       });
     },
   },

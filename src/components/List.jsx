@@ -7,6 +7,8 @@ import IncreaseButton from "./IncreaseButton";
 import DecreaseButton from "./DecreaseButton";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
+import SearchBar from "./SearchBar";
+import dayjs from "dayjs";
 
 const List = () => {
   const { t } = useTranslation();
@@ -14,6 +16,7 @@ const List = () => {
   const list = useSelector((state) => state.list);
   const [product, setProduct] = useState("");
   const inputName = useRef();
+  const currentDate = dayjs();
 
   useEffect(() => {
     const handleInputChange = (event) => {
@@ -27,15 +30,20 @@ const List = () => {
         setProduct("");
         productValue !== ""
           ? dispatch(
-              addProduct({ id: Date.now(), name: productValue, units: 1 })
+              addProduct({
+                id: Date.now(),
+                name: productValue,
+                units: 1,
+                timestamp: currentDate.format(t("list.date")),
+              })
             )
-          : alert(t("Enter a product"));
+          : alert(t("list.enterProduct"));
       }
     };
 
     const inputElement = inputName.current;
-    inputElement.addEventListener("input", handleInputChange);
-    inputElement.addEventListener("keypress", handleKeyPress);
+    inputElement.addEventListener("input", handleInputChange); 
+    inputElement.addEventListener("keypress", handleKeyPress); 
 
     return () => {
       inputElement.removeEventListener("input", handleInputChange);
@@ -49,13 +57,14 @@ const List = () => {
         <div className="language">
           <LanguageSelector />
         </div>
-        <h1 className="h1">{t("Shopping List")}</h1>
+        <h1 className="h1">{t("list.shoppingList")}</h1>
+        <SearchBar list={list} />
         <div className="product-container">
           <div className="input">
-            <label htmlFor="product"> {t("product")} :</label>
+            <label htmlFor="product"> {t("products.product")} :</label>
             <input
               id="product"
-              placeholder={t("Enter a product")}
+              placeholder={t("list.enterProduct")}
               ref={inputName}
               type="text"
               maxLength={20}
@@ -72,17 +81,15 @@ const List = () => {
               <div className="name">{product.name}</div>
               <div className="units">
                 {product.units}
-                {product.units < 2 ? t("unit") : t("units")}
+                {product.units < 2 ? t("products.unit") : t("products.units")}
               </div>
               <input
                 className="check"
                 type="checkbox"
                 checked={product.isBought}
-                id="miCheckbox"
+                id={product.id}
               />
-              <label htmlFor="miCheckbox">
-                <span className="checkPersonalizado"></span>
-              </label>
+              <div className="date">{product.timestamp}</div>
               <DeleteButton productId={product.id} />
               <IncreaseButton productId={product.id} />
               <DecreaseButton productId={product.id} />
