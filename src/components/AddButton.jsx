@@ -10,7 +10,7 @@ const AddButton = ({ product, setProduct, inputName }) => {
 
   const handleClick = () => {
     inputName.current.focus();
-    setProduct("jj");
+    setProduct("Prueba");
     inputName.current.value = "";
     product !== ""
       ? dispatch(
