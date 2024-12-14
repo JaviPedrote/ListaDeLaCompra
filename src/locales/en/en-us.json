@@ -1,0 +1,21 @@
+{
+  "products": {
+    "product": "Product",
+    "units": "units",
+    "unit": "unit",
+    "searchProduct": "Search a product"
+  },
+  "list": {
+    "shoppingList": "Shopping List",
+    "enterProduct": "Enter a product",
+    "date": "YYYY-MM-DD",
+    "increase": "Increase",
+    "decrease": "Decrease",
+    "delete": "Delete",
+    "add": "Add"
+  },
+  "language": {
+    "spanish": "Spanish",
+    "english": "English"
+  }
+}
